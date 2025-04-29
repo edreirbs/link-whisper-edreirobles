@@ -1,10 +1,15 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { aliasExists, generateId, isValidUrl, saveShortenedUrl } from "@/utils/urlService";
+import { 
+  aliasExists, 
+  generateId, 
+  isValidUrl, 
+  saveShortenedUrl, 
+  generateShortAlias 
+} from "@/utils/urlService";
 import { ShortenedUrl, UrlFormData } from "@/types/url";
 
 interface UrlShortenerFormProps {
@@ -15,6 +20,24 @@ const UrlShortenerForm = ({ onUrlCreated }: UrlShortenerFormProps) => {
   const [formData, setFormData] = useState<UrlFormData>({ originalUrl: "", alias: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [suggestedAlias, setSuggestedAlias] = useState("");
+
+  // Generate a suggested alias on component mount
+  useEffect(() => {
+    generateUniqueAlias();
+  }, []);
+
+  // Generate a unique alias that doesn't already exist
+  const generateUniqueAlias = () => {
+    let alias = generateShortAlias();
+    
+    // Keep generating until we find an unused alias
+    while (aliasExists(alias)) {
+      alias = generateShortAlias();
+    }
+    
+    setSuggestedAlias(alias);
+  };
 
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
@@ -25,11 +48,14 @@ const UrlShortenerForm = ({ onUrlCreated }: UrlShortenerFormProps) => {
       newErrors.originalUrl = "Please enter a valid URL (including http:// or https://)";
     }
 
-    if (!formData.alias.trim()) {
+    // If no alias provided, use the suggested one
+    const aliasToUse = formData.alias.trim() || suggestedAlias;
+    
+    if (!aliasToUse) {
       newErrors.alias = "Alias is required";
-    } else if (!/^[a-zA-Z0-9-_]+$/.test(formData.alias)) {
+    } else if (!/^[a-zA-Z0-9-_]+$/.test(aliasToUse)) {
       newErrors.alias = "Alias can only contain letters, numbers, hyphens, and underscores";
-    } else if (aliasExists(formData.alias)) {
+    } else if (aliasExists(aliasToUse)) {
       newErrors.alias = "This alias is already in use";
     }
 
@@ -61,10 +87,13 @@ const UrlShortenerForm = ({ onUrlCreated }: UrlShortenerFormProps) => {
     setIsSubmitting(true);
 
     try {
+      // Use the provided alias or the suggested one if empty
+      const aliasToUse = formData.alias.trim() || suggestedAlias;
+      
       const newUrl: ShortenedUrl = {
         id: generateId(),
         originalUrl: formData.originalUrl,
-        alias: formData.alias,
+        alias: aliasToUse,
         createdAt: Date.now()
       };
 
@@ -73,6 +102,8 @@ const UrlShortenerForm = ({ onUrlCreated }: UrlShortenerFormProps) => {
       
       // Reset form
       setFormData({ originalUrl: "", alias: "" });
+      // Generate a new suggested alias for the next URL
+      generateUniqueAlias();
       onUrlCreated();
     } catch (error) {
       toast.error("An error occurred while shortening the URL");
@@ -101,19 +132,29 @@ const UrlShortenerForm = ({ onUrlCreated }: UrlShortenerFormProps) => {
 
       <div className="space-y-2">
         <Label htmlFor="alias">Custom Alias</Label>
-        <Input
-          id="alias"
-          name="alias"
-          placeholder="my-custom-link"
-          value={formData.alias}
-          onChange={handleChange}
-          className={errors.alias ? "border-red-500" : ""}
-        />
+        <div className="flex space-x-2">
+          <Input
+            id="alias"
+            name="alias"
+            placeholder={suggestedAlias}
+            value={formData.alias}
+            onChange={handleChange}
+            className={errors.alias ? "border-red-500" : ""}
+          />
+          <Button 
+            type="button" 
+            variant="outline"
+            onClick={generateUniqueAlias}
+            className="shrink-0"
+          >
+            Refresh
+          </Button>
+        </div>
         {errors.alias && (
           <p className="text-red-500 text-sm mt-1">{errors.alias}</p>
         )}
         <p className="text-sm text-muted-foreground">
-          Choose a memorable name for your shortened URL
+          Leave empty to use the suggested short alias or enter your own custom alias
         </p>
       </div>
 

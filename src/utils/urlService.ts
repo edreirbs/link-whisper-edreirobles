@@ -49,3 +49,17 @@ export const isValidUrl = (url: string): boolean => {
 export const generateId = (): string => {
   return Math.random().toString(36).substring(2, 10);
 };
+
+// Generate a shorter random alias (6 characters)
+export const generateShortAlias = (): string => {
+  // Characters to use for the alias (alphanumeric without confusing characters)
+  const chars = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789';
+  let result = '';
+  
+  // Generate a 6-character alias
+  for (let i = 0; i < 6; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  
+  return result;
+};
