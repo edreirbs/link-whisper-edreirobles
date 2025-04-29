@@ -30,9 +30,9 @@ export const deleteShortenedUrl = (id: string): void => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedUrls));
 };
 
-// Get full shortened URL including base URL
+// Get full shortened URL including base URL - now using shorter path
 export const getFullShortenedUrl = (alias: string): string => {
-  return `${BASE_URL}/s/${alias}`;
+  return `${BASE_URL}/${alias}`;
 };
 
 // Validate a URL

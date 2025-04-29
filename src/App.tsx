@@ -18,7 +18,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/s/:alias" element={<Redirect />} />
+          <Route path="/:alias" element={<Redirect />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

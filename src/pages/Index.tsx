@@ -44,7 +44,10 @@ const Index = () => {
       <footer className="bg-white border-t mt-auto">
         <div className="container mx-auto py-6 px-4">
           <p className="text-center text-gray-500 text-sm">
-            LinkWhisper - Create and manage your shortened URLs with ease
+            LinkWhisper - Created by Edrei Robles
+          </p>
+          <p className="text-center text-gray-400 text-xs mt-1">
+            Create and manage your shortened URLs with ease
           </p>
         </div>
       </footer>
