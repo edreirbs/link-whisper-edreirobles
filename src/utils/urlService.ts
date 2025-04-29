@@ -1,4 +1,3 @@
-
 import { ShortenedUrl } from "@/types/url";
 
 const STORAGE_KEY = "link_whisper_urls";
@@ -50,14 +49,14 @@ export const generateId = (): string => {
   return Math.random().toString(36).substring(2, 10);
 };
 
-// Generate a shorter random alias (6 characters)
+// Generate an ultra-short alias (only 4 characters)
 export const generateShortAlias = (): string => {
-  // Characters to use for the alias (alphanumeric without confusing characters)
-  const chars = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789';
+  // Use a larger character set to maintain uniqueness with fewer characters
+  const chars = 'abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ0123456789_-';
   let result = '';
   
-  // Generate a 6-character alias
-  for (let i = 0; i < 6; i++) {
+  // Generate a 4-character alias
+  for (let i = 0; i < 4; i++) {
     result += chars.charAt(Math.floor(Math.random() * chars.length));
   }
   
