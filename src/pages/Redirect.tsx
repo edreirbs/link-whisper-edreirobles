@@ -11,7 +11,7 @@ const Redirect = () => {
 
   useEffect(() => {
     if (!alias) {
-      setError("Invalid alias");
+      setError("Alias inválido");
       return;
     }
 
@@ -21,7 +21,7 @@ const Redirect = () => {
     if (urlData) {
       setRedirectUrl(urlData.originalUrl);
     } else {
-      setError("URL not found");
+      setError("URL no encontrada");
     }
   }, [alias]);
 
@@ -38,7 +38,7 @@ const Redirect = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
       <Loader2 className="h-12 w-12 animate-spin text-linkWhisper-blue" />
-      <p className="mt-4 text-lg">Redirecting...</p>
+      <p className="mt-4 text-lg">Redireccionando...</p>
     </div>
   );
 };

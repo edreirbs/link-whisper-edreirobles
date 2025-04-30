@@ -19,20 +19,20 @@ const ShortUrlList = ({ urls, onUrlDeleted }: ShortUrlListProps) => {
     const fullUrl = getFullShortenedUrl(alias);
     navigator.clipboard.writeText(fullUrl).then(() => {
       setCopiedId(alias);
-      toast.success("URL copied to clipboard!");
+      toast.success("¡URL copiada al portapapeles!");
       
-      // Reset the copied state after 2 seconds
+      // Restablecer el estado de copiado después de 2 segundos
       setTimeout(() => {
         setCopiedId(null);
       }, 2000);
     }).catch(() => {
-      toast.error("Failed to copy URL");
+      toast.error("Error al copiar la URL");
     });
   };
 
   const handleDeleteUrl = (id: string) => {
     deleteShortenedUrl(id);
-    toast.success("URL deleted successfully");
+    toast.success("URL eliminada correctamente");
     onUrlDeleted();
   };
 
@@ -44,14 +44,14 @@ const ShortUrlList = ({ urls, onUrlDeleted }: ShortUrlListProps) => {
     return (
       <div className="text-center py-8 text-muted-foreground">
         <Link2 className="mx-auto mb-2 h-12 w-12 text-linkWhisper-blue opacity-50" />
-        <p>No shortened URLs yet. Create your first one above!</p>
+        <p>No hay URLs acortadas todavía. ¡Crea tu primera URL arriba!</p>
       </div>
     );
   }
 
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-semibold">Your Shortened URLs</h2>
+      <h2 className="text-xl font-semibold">Tus URLs Acortadas</h2>
       {urls.map((url) => (
         <Card key={url.id} className="overflow-hidden">
           <CardContent className="p-0">
@@ -63,7 +63,7 @@ const ShortUrlList = ({ urls, onUrlDeleted }: ShortUrlListProps) => {
                     {url.originalUrl}
                   </p>
                   <p className="text-xs text-muted-foreground mt-1">
-                    Created on {formatDate(url.createdAt)}
+                    Creada el {formatDate(url.createdAt)}
                   </p>
                 </div>
                 <div className="flex space-x-2">
@@ -74,11 +74,11 @@ const ShortUrlList = ({ urls, onUrlDeleted }: ShortUrlListProps) => {
                     className={copiedId === url.alias ? "bg-green-50 border-green-200 text-green-600" : ""}
                   >
                     {copiedId === url.alias ? (
-                      "Copied!"
+                      "¡Copiado!"
                     ) : (
                       <>
                         <Clipboard className="h-4 w-4 mr-1" />
-                        Copy
+                        Copiar
                       </>
                     )}
                   </Button>
