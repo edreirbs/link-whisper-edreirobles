@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { ShortenedUrl } from "@/types/url";
-import { deleteShortenedUrl, getFullShortenedUrl } from "@/utils/urlService";
+import { deleteShortenedUrl, getFullShortenedUrl, getDisplayShortenedUrl } from "@/utils/urlService";
 import { Link2, Clipboard, Trash2 } from "lucide-react";
 
 interface ShortUrlListProps {
@@ -100,7 +100,7 @@ const ShortUrlList = ({ urls, onUrlDeleted }: ShortUrlListProps) => {
                   className="text-linkWhisper-teal hover:underline truncate flex items-center"
                 >
                   <Link2 className="h-3 w-3 mr-1 inline" />
-                  {getFullShortenedUrl(url.alias)}
+                  {getDisplayShortenedUrl(url.alias)}
                 </a>
               </div>
             </div>
