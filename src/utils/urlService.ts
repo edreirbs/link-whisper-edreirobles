@@ -39,7 +39,11 @@ export const getFullShortenedUrl = (alias: string): string => {
 // Get a display version of the URL that looks shorter
 export const getDisplayShortenedUrl = (alias: string): string => {
   // Create an ultra-short display URL (just for display)
-  return `${window.location.protocol}//lw.app/${alias}`;
+  // Replace the current domain with just "lw.lovable.app"
+  const currentDomain = window.location.hostname;
+  const shortDomain = currentDomain.replace("link-whisper-alias-maker", "lw");
+  
+  return `${window.location.protocol}//${shortDomain}/${alias}`;
 };
 
 // Validate a URL
