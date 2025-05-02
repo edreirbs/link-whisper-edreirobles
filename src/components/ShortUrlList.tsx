@@ -17,6 +17,7 @@ const ShortUrlList = ({ urls, onUrlDeleted }: ShortUrlListProps) => {
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const handleCopyUrl = (alias: string) => {
+    // Copy the full URL that will actually work
     const fullUrl = getFullShortenedUrl(alias);
     navigator.clipboard.writeText(fullUrl).then(() => {
       setCopiedId(alias);

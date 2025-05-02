@@ -29,21 +29,17 @@ export const deleteShortenedUrl = (id: string): void => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedUrls));
 };
 
-// Get full shortened URL including base URL
+// Get full shortened URL including base URL (the actual URL that will work)
 export const getFullShortenedUrl = (alias: string): string => {
-  // Create a URL that works with our app structure, but hide the hash
-  // We'll need to handle this special format on redirect
+  // This returns the functional URL that actually works for redirection
   return `${window.location.origin}/${alias}`;
 };
 
-// Get a display version of the URL that looks shorter
+// Get a display version of the URL that looks shorter (the URL shown to users)
 export const getDisplayShortenedUrl = (alias: string): string => {
-  // Create an ultra-short display URL (just for display)
-  // Replace the current domain with just "lw.lovable.app"
-  const currentDomain = window.location.hostname;
-  const shortDomain = currentDomain.replace("link-whisper-alias-maker", "lw");
-  
-  return `${window.location.protocol}//${shortDomain}/${alias}`;
+  // Create the shortened display URL
+  // Use "lw.lovable.app" instead of the full domain
+  return `${window.location.protocol}//lw.lovable.app/${alias}`;
 };
 
 // Validate a URL
