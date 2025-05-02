@@ -31,14 +31,15 @@ export const deleteShortenedUrl = (id: string): void => {
 
 // Get full shortened URL including base URL
 export const getFullShortenedUrl = (alias: string): string => {
-  // Create a working URL that works with the current routing setup
-  return `${window.location.origin}/#/${alias}`;
+  // Create a URL that works with our app structure, but hide the hash
+  // We'll need to handle this special format on redirect
+  return `${window.location.origin}/${alias}`;
 };
 
 // Get a display version of the URL that looks shorter
 export const getDisplayShortenedUrl = (alias: string): string => {
   // Create an ultra-short display URL (just for display)
-  return `${window.location.protocol}//l.sh/${alias}`;
+  return `${window.location.protocol}//lw.app/${alias}`;
 };
 
 // Validate a URL
