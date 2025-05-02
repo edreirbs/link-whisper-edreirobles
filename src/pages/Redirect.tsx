@@ -29,7 +29,12 @@ const Redirect = () => {
     if (redirectUrl) {
       // Give a small delay to show the loading state
       const timer = setTimeout(() => {
-        window.location.href = redirectUrl;
+        // Ensure the URL has the proper protocol
+        let finalUrl = redirectUrl;
+        if (!finalUrl.startsWith('http://') && !finalUrl.startsWith('https://')) {
+          finalUrl = 'https://' + finalUrl;
+        }
+        window.location.href = finalUrl;
       }, 300);
       
       return () => clearTimeout(timer);

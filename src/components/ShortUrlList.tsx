@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { ShortenedUrl } from "@/types/url";
 import { deleteShortenedUrl, getFullShortenedUrl, getDisplayShortenedUrl } from "@/utils/urlService";
 import { Link2, Clipboard, Trash2 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface ShortUrlListProps {
   urls: ShortenedUrl[];
@@ -93,15 +94,13 @@ const ShortUrlList = ({ urls, onUrlDeleted }: ShortUrlListProps) => {
                 </div>
               </div>
               <div className="mt-2 pt-2 border-t text-sm flex">
-                <a
-                  href={getFullShortenedUrl(url.alias)}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to={`/${url.alias}`}
                   className="text-linkWhisper-teal hover:underline truncate flex items-center"
                 >
                   <Link2 className="h-3 w-3 mr-1 inline" />
                   {getDisplayShortenedUrl(url.alias)}
-                </a>
+                </Link>
               </div>
             </div>
           </CardContent>

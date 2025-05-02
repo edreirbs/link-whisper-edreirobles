@@ -37,14 +37,19 @@ export const getFullShortenedUrl = (alias: string): string => {
 
 // Get a display version of the URL that looks shorter
 export const getDisplayShortenedUrl = (alias: string): string => {
-  // Create an ultra-short display URL
+  // Create an ultra-short display URL (just for display)
   return `${window.location.protocol}//l.sh/${alias}`;
 };
 
 // Validate a URL
 export const isValidUrl = (url: string): boolean => {
   try {
-    new URL(url);
+    // Check if it has a protocol, if not add a default one temporarily for validation
+    const urlToCheck = url.startsWith('http://') || url.startsWith('https://') 
+      ? url 
+      : 'https://' + url;
+    
+    new URL(urlToCheck);
     return true;
   } catch (error) {
     return false;
