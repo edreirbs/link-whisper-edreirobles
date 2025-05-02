@@ -2,7 +2,6 @@
 import { ShortenedUrl } from "@/types/url";
 
 const STORAGE_KEY = "link_whisper_urls";
-const BASE_URL = window.location.origin;
 
 // Get all shortened URLs from local storage
 export const getShortenedUrls = (): ShortenedUrl[] => {
@@ -30,16 +29,16 @@ export const deleteShortenedUrl = (id: string): void => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedUrls));
 };
 
-// Get full shortened URL including base URL but with a much shorter display format
+// Get full shortened URL including base URL
 export const getFullShortenedUrl = (alias: string): string => {
-  // Return the actual URL that will work for navigation
-  return `${BASE_URL}/${alias}`;
+  // Create a working URL that works with the current routing setup
+  return `${window.location.origin}/#/${alias}`;
 };
 
 // Get a display version of the URL that looks shorter
 export const getDisplayShortenedUrl = (alias: string): string => {
-  // Create a shorter looking URL for display purposes only
-  return `${window.location.protocol}//lw.sh/${alias}`;
+  // Create an ultra-short display URL
+  return `${window.location.protocol}//l.sh/${alias}`;
 };
 
 // Validate a URL
@@ -70,4 +69,3 @@ export const generateShortAlias = (): string => {
   
   return result;
 };
-

@@ -27,7 +27,12 @@ const Redirect = () => {
 
   useEffect(() => {
     if (redirectUrl) {
-      window.location.href = redirectUrl;
+      // Give a small delay to show the loading state
+      const timer = setTimeout(() => {
+        window.location.href = redirectUrl;
+      }, 300);
+      
+      return () => clearTimeout(timer);
     }
   }, [redirectUrl]);
 
