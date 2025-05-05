@@ -19,9 +19,14 @@ const Redirect = () => {
     const urlData = urls.find((url) => url.alias === alias);
 
     if (urlData) {
+      // Found the URL, set it for redirection
       setRedirectUrl(urlData.originalUrl);
+      
+      // Add debugging to see what's happening
+      console.log("Found URL to redirect to:", urlData.originalUrl);
     } else {
       setError("URL no encontrada");
+      console.log("No URL found for alias:", alias);
     }
   }, [alias]);
 
@@ -34,6 +39,8 @@ const Redirect = () => {
         if (!finalUrl.startsWith('http://') && !finalUrl.startsWith('https://')) {
           finalUrl = 'https://' + finalUrl;
         }
+        
+        console.log("Redirecting to:", finalUrl);
         window.location.href = finalUrl;
       }, 300);
       
