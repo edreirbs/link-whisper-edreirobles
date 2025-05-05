@@ -17,9 +17,9 @@ const ShortUrlList = ({ urls, onUrlDeleted }: ShortUrlListProps) => {
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const handleCopyUrl = (alias: string) => {
-    // Copy the full URL that will actually work
-    const fullUrl = getFullShortenedUrl(alias);
-    navigator.clipboard.writeText(fullUrl).then(() => {
+    // Copy the real shortened URL (now lw.lovable.app/alias)
+    const shortUrl = getFullShortenedUrl(alias);
+    navigator.clipboard.writeText(shortUrl).then(() => {
       setCopiedId(alias);
       toast.success("¡URL copiada al portapapeles!");
       

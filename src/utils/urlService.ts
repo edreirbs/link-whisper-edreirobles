@@ -29,17 +29,16 @@ export const deleteShortenedUrl = (id: string): void => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedUrls));
 };
 
-// Get full shortened URL including base URL (the actual URL that will work)
+// Get the complete shortened URL (the actual URL that will work)
 export const getFullShortenedUrl = (alias: string): string => {
-  // This returns the functional URL that actually works for redirection
-  return `${window.location.origin}/${alias}`;
+  // Return the URL using lw.lovable.app domain
+  return `https://lw.lovable.app/${alias}`;
 };
 
-// Get a display version of the URL that looks shorter (the URL shown to users)
+// Get the display version of the URL (shown to users in the UI)
 export const getDisplayShortenedUrl = (alias: string): string => {
-  // Create the shortened display URL
-  // Use "lw.lovable.app" instead of the full domain
-  return `${window.location.protocol}//lw.lovable.app/${alias}`;
+  // This should match the actual URL now
+  return `https://lw.lovable.app/${alias}`;
 };
 
 // Validate a URL
