@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import { getShortenedUrls } from "@/utils/urlService";
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 const Redirect = () => {
   const { alias } = useParams<{ alias: string }>();
@@ -15,18 +16,17 @@ const Redirect = () => {
       return;
     }
 
+    console.log("Buscando alias:", alias);
     const urls = getShortenedUrls();
     const urlData = urls.find((url) => url.alias === alias);
 
     if (urlData) {
       // Found the URL, set it for redirection
       setRedirectUrl(urlData.originalUrl);
-      
-      // Add debugging to see what's happening
-      console.log("Found URL to redirect to:", urlData.originalUrl);
+      console.log("URL encontrada para redirección:", urlData.originalUrl);
     } else {
+      console.log("No se encontró URL para el alias:", alias);
       setError("URL no encontrada");
-      console.log("No URL found for alias:", alias);
     }
   }, [alias]);
 
@@ -40,7 +40,7 @@ const Redirect = () => {
           finalUrl = 'https://' + finalUrl;
         }
         
-        console.log("Redirecting to:", finalUrl);
+        console.log("Redireccionando a:", finalUrl);
         window.location.href = finalUrl;
       }, 300);
       
@@ -49,6 +49,7 @@ const Redirect = () => {
   }, [redirectUrl]);
 
   if (error) {
+    toast.error("URL no encontrada");
     return <Navigate to="/" />;
   }
 
