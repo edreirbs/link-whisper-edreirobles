@@ -25,8 +25,9 @@ const handleShortUrlAccess = () => {
     
     console.log("Alias detectado:", alias);
     
-    if (alias === "auth") {
-      console.log("Ignorando ruta /auth");
+    // Skip special paths (like /auth) that aren't shortened URLs
+    if (alias === "auth" || alias === "favicon.ico" || alias.startsWith("_")) {
+      console.log("Ignorando ruta especial:", alias);
       return false;
     }
     
